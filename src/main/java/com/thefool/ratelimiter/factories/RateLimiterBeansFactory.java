@@ -11,7 +11,7 @@ public class RateLimiterBeansFactory {
     RatelimiterConfig ratelimiterConfig = new RatelimiterConfig();
     public static final RateLimiterBeansFactory context = new RateLimiterBeansFactory();
 
-    private RateLimiterBeansFactory() {
+    public RateLimiterBeansFactory() {
         ratelimiterConfig.load();
     }
 
