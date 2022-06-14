@@ -1,5 +1,7 @@
 package com.thefool.ratelimiter;
 
+import com.thefool.ratelimiter.factories.RateLimiterBeansFactory;
+import com.thefool.ratelimiter.spi.ExtensionServiceLoader;
 import lombok.Data;
 import com.thefool.ratelimiter.rule.struct.UniformRuleConfigMapping;
 import com.thefool.ratelimiter.algorithm.IRatelimiter;
@@ -7,14 +9,11 @@ import com.thefool.ratelimiter.algorithm.IRatelimiter;
 @Data
 public class RateLimiter {
 
-    private UniformRuleConfigMapping uniformRuleConfigMapping;
-    private IRatelimiter ratelimiter;
-
+    UniformRuleConfigMapping uniformRuleConfigMapping;
+    IRatelimiter ratelimiter;
 
     public RateLimiter() {
-    }
-
-    public static void main(String[] args) {
-        new RateLimiter();
+        uniformRuleConfigMapping = RateLimiterBeansFactory.context.obtainRuleConfigSource().load();
+        ratelimiter = ExtensionServiceLoader.getExtension(IRatelimiter.class);
     }
 }
