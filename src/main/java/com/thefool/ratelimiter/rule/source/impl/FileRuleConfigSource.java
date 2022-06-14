@@ -1,13 +1,10 @@
 package com.thefool.ratelimiter.rule.source.impl;
 
-import com.thefool.ratelimiter.rule.parser.IRuleConfigParser;
-import com.thefool.ratelimiter.rule.parser.impl.YamlRuleConfigParser;
+import com.thefool.ratelimiter.factories.RuleConfigParserFactory;
 import com.thefool.ratelimiter.rule.source.IRuleConfigSource;
 import com.thefool.ratelimiter.rule.struct.UniformRuleConfigMapping;
 
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 public class FileRuleConfigSource implements IRuleConfigSource {
 
@@ -19,11 +16,6 @@ public class FileRuleConfigSource implements IRuleConfigSource {
     private static final String[] SUPPORT_EXTENSIONS =
             new String[] {YAML_EXTENSION, YML_EXTENSION, JSON_EXTENSION};
 
-    private static final Map<String, IRuleConfigParser> PARSER_MAP = new HashMap<>();
-    static {
-        PARSER_MAP.put(YAML_EXTENSION, new YamlRuleConfigParser());
-    }
-
     @Override
     public UniformRuleConfigMapping load() {
         for (String extension : SUPPORT_EXTENSIONS) {
@@ -31,7 +23,7 @@ public class FileRuleConfigSource implements IRuleConfigSource {
             try {
                 in = this.getClass().getResourceAsStream("/" + getFileNameByExt(extension));
                 if(in != null) {
-                    return PARSER_MAP.get(extension).parse(in);
+                    return RuleConfigParserFactory.obtainRuleConfigParser(extension).parse(in);
                 }
             } finally {
                 if(in != null) {
