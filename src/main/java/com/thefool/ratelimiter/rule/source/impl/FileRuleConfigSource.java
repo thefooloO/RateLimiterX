@@ -1,9 +1,9 @@
-package rule.source.impl;
+package com.thefool.ratelimiter.rule.source.impl;
 
-import rule.parser.IRuleConfigParser;
-import rule.parser.impl.YamlRuleConfigParser;
-import rule.source.IRuleConfigSource;
-import rule.struct.UniformRuleConfigMapping;
+import com.thefool.ratelimiter.rule.parser.IRuleConfigParser;
+import com.thefool.ratelimiter.rule.parser.impl.YamlRuleConfigParser;
+import com.thefool.ratelimiter.rule.source.IRuleConfigSource;
+import com.thefool.ratelimiter.rule.struct.UniformRuleConfigMapping;
 
 import java.io.InputStream;
 import java.util.HashMap;

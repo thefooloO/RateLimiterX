@@ -1,6 +1,6 @@
-package rule.parser;
+package com.thefool.ratelimiter.rule.parser;
 
-import rule.struct.UniformRuleConfigMapping;
+import com.thefool.ratelimiter.rule.struct.UniformRuleConfigMapping;
 
 import java.io.InputStream;
 

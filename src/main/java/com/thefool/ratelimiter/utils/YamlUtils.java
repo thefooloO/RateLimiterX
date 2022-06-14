@@ -1,4 +1,4 @@
-package utils;
+package com.thefool.ratelimiter.utils;
 
 import org.yaml.snakeyaml.Yaml;
 

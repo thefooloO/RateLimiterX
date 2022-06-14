@@ -1,4 +1,4 @@
-package rule.struct;
+package com.thefool.ratelimiter.rule.struct;
 
 import lombok.Data;
 
