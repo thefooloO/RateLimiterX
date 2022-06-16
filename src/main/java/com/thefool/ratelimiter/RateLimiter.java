@@ -1,9 +1,9 @@
 package com.thefool.ratelimiter;
 
 import com.thefool.ratelimiter.factories.RateLimiterBeansFactory;
+import com.thefool.ratelimiter.rule.struct.UniformRuleConfigMapping;
 import com.thefool.ratelimiter.spi.ExtensionServiceLoader;
 import lombok.Data;
-import com.thefool.ratelimiter.rule.struct.UniformRuleConfigMapping;
 import com.thefool.ratelimiter.algorithm.IRatelimiter;
 
 @Data

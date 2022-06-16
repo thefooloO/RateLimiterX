@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class UniformRuleConfig {
-    String api;
-    int limit;
-    int unit = 1;
+    String name;
+    String alg;
+    String info;
+    String format;
 }

@@ -1,5 +1,9 @@
 configs:
-    - api: /v1/user
-      limit: 100
-    - api: /v1/order
-      limit: 50
+    - name: test
+      alg: com.thefool.ratelimiter.algorithm.impl.FixedTimeWindowRatelimiter
+      info: '{"limit": 1, "unit": 1}'
+      format: com.thefool.ratelimiter.rule.struct.FixedTimeWindowRatelimiterRule
+    - name: test2
+      alg: com.thefool.ratelimiter.algorithm.impl.FixedTimeWindowRatelimiter
+      info: '{"limit": 2, "unit": 2}'
+      format: com.thefool.ratelimiter.rule.struct.FixedTimeWindowRatelimiterRule
