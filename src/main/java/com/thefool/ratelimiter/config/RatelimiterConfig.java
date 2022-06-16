@@ -25,8 +25,9 @@ public class RatelimiterConfig {
 
     public void load() {
         PropertySource propertySource = new PropertySource();
+        // 属性来源排序, 相同的属性高优先级会覆盖低优先级的
         Collections.sort(sourceLoaders, OrderComparator.instance);
-        for (int i = sourceLoaders.size() - 1; i >= 0; --i) {
+        for(int i = sourceLoaders.size() - 1; i >= 0; --i) {
             propertySource.combinePropertySource(sourceLoaders.get(i).load());
         }
         mapPropertiesToConfigs(propertySource);
