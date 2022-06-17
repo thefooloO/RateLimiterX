@@ -18,6 +18,7 @@ public class RatelimiterConfig {
     private String ruleConfigParserType = "yaml";
     private String ruleConfigSourceType = "file";
     private String basePackages;
+    private String appId;
 
     public RatelimiterConfig() {
         sourceLoaders = new ArrayList<>();
