@@ -1,38 +1,31 @@
 package com.thefool.ratelimiter;
 
 import com.thefool.ratelimiter.annotation.Ratelimit;
+import com.thefool.ratelimiter.annotation.RatelimitProcessor;
 import com.thefool.ratelimiter.factories.RateLimiterBeansFactory;
+import com.thefool.ratelimiter.properties.PropertyConstants;
 import com.thefool.ratelimiter.rule.struct.UniformRuleConfigMapping;
 import lombok.Data;
-import org.reflections.Reflections;
-import org.reflections.scanners.MethodAnnotationsScanner;
-import org.reflections.util.ConfigurationBuilder;
-
-import java.lang.reflect.Method;
-import java.util.Set;
 
 @Data
 public class RateLimiter {
 
-    UniformRuleConfigMapping uniformRuleConfigMapping;
+    private UniformRuleConfigMapping uniformRuleConfigMapping;
+    private RatelimitProcessor ratelimitProcessor;
 
     public RateLimiter() {
         uniformRuleConfigMapping = RateLimiterBeansFactory.context.obtainRuleConfigSource().load();
+        ratelimitProcessor = new RatelimitProcessor();
+        ratelimitProcessor.process();
     }
 
 
-
-    @Ratelimit("test-static")
-    public static void testStatic() {}
-
     @Ratelimit("test")
-    public void test(){}
+    public void test() {}
 
     public static void main(String[] args) {
-        Reflections reflections = new Reflections(new ConfigurationBuilder().forPackages("com.thefool.ratelimiter").addScanners(new MethodAnnotationsScanner()));
-        Set<Method> methods = reflections.getMethodsAnnotatedWith(Ratelimit.class);
-        for(Method method : methods) {
-            System.out.println(method.getAnnotation(Ratelimit.class).value());
-        }
+        System.setProperty(PropertyConstants.BASE_PACKAGES, "com.thefool.ratelimiter");
+        new RateLimiter().ratelimitProcessor.print();
+
     }
 }

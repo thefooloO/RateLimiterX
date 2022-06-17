@@ -39,9 +39,4 @@ public class FileRuleConfigSource implements IRuleConfigSource {
     private String getFileNameByExt(String extension) {
         return API_LIMIT_CONFIG_NAME + "." + extension;
     }
-
-
-    public static void main(String[] args) {
-        System.out.println(new FileRuleConfigSource().load());
-    }
 }

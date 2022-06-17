@@ -5,11 +5,13 @@ import com.thefool.ratelimiter.properties.PropertyConstants;
 import com.thefool.ratelimiter.rule.parser.IRuleConfigParser;
 import com.thefool.ratelimiter.rule.source.IRuleConfigSource;
 import com.thefool.ratelimiter.spi.ExtensionServiceLoader;
+import lombok.Data;
 
+@Data
 public class RateLimiterBeansFactory {
 
-    RatelimiterConfig ratelimiterConfig = new RatelimiterConfig();
     public static final RateLimiterBeansFactory context = new RateLimiterBeansFactory();
+    private RatelimiterConfig ratelimiterConfig = new RatelimiterConfig();
 
     public RateLimiterBeansFactory() {
         ratelimiterConfig.load();
@@ -29,14 +31,5 @@ public class RateLimiterBeansFactory {
         return ruleConfigSource != null
                 ? ruleConfigSource
                 : RuleConfigSourceFactory.obtainRuleConfigSource(ratelimiterConfig.getRuleConfigSourceType());
-    }
-
-
-    public static void main(String[] args) {
-        System.setProperty(PropertyConstants.PROPERTY_RULE_CONFIG_PARSER, "xml");
-        System.setProperty(PropertyConstants.PROPERTY_RULE_CONFIG_SOURCE, "redis");
-        RateLimiterBeansFactory rateLimiterBeansFactory = new RateLimiterBeansFactory();
-        System.out.println(rateLimiterBeansFactory.obtainRuleConfigParser());
-        System.out.println(rateLimiterBeansFactory.obtainRuleConfigSource().load());
     }
 }
