@@ -17,6 +17,7 @@ public class RatelimiterConfig {
     private List<PropertySourceLoader> sourceLoaders;
     private String ruleConfigParserType = "yaml";
     private String ruleConfigSourceType = "file";
+    private String basePackages;
 
     public RatelimiterConfig() {
         sourceLoaders = new ArrayList<>();
@@ -43,14 +44,18 @@ public class RatelimiterConfig {
         if(sourceType != null) {
             this.ruleConfigSourceType = sourceType;
         }
+
+        this.basePackages = propertySource.getPropertyStringValue(PropertyConstants.BASE_PACKAGES);
     }
 
     public static void main(String[] args) {
         System.setProperty(PropertyConstants.PROPERTY_RULE_CONFIG_PARSER, "xml");
         System.setProperty(PropertyConstants.PROPERTY_RULE_CONFIG_SOURCE, "redis");
+        System.setProperty(PropertyConstants.BASE_PACKAGES, "com.thefool.ratelimiter");
         RatelimiterConfig ratelimiterConfig = new RatelimiterConfig();
         ratelimiterConfig.load();
         System.out.println(ratelimiterConfig.getRuleConfigParserType());
         System.out.println(ratelimiterConfig.getRuleConfigSourceType());
+        System.out.println(ratelimiterConfig.getBasePackages());
     }
 }
