@@ -47,5 +47,6 @@ public class RatelimiterConfig {
         }
 
         this.basePackages = propertySource.getPropertyStringValue(PropertyConstants.BASE_PACKAGES);
+        this.appId = propertySource.getPropertyStringValue(PropertyConstants.APP_ID);
     }
 }
