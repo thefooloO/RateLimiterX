@@ -3,7 +3,6 @@ package com.thefool.ratelimiter;
 import com.thefool.ratelimiter.annotation.Ratelimit;
 import com.thefool.ratelimiter.factories.RateLimiterBeansFactory;
 import com.thefool.ratelimiter.rule.struct.UniformRuleConfigMapping;
-import lombok.Data;
 
 public class RateLimiter {
 
