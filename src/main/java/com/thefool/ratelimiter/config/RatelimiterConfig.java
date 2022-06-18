@@ -17,7 +17,6 @@ public class RatelimiterConfig {
     private List<PropertySourceLoader> sourceLoaders;
     private String ruleConfigParserType = "yaml";
     private String ruleConfigSourceType = "file";
-    private String basePackages;
     private String appId;
 
     public RatelimiterConfig() {
@@ -45,8 +44,6 @@ public class RatelimiterConfig {
         if(sourceType != null) {
             this.ruleConfigSourceType = sourceType;
         }
-
-        this.basePackages = propertySource.getPropertyStringValue(PropertyConstants.BASE_PACKAGES);
         this.appId = propertySource.getPropertyStringValue(PropertyConstants.APP_ID);
     }
 }
