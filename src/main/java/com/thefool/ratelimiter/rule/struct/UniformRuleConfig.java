@@ -38,4 +38,14 @@ public class UniformRuleConfig {
     public void setFormat(String format) {
         this.format = format;
     }
+
+    @Override
+    public String toString() {
+        return "UniformRuleConfig{" +
+                "name='" + name + '\'' +
+                ", alg='" + alg + '\'' +
+                ", info='" + info + '\'' +
+                ", format='" + format + '\'' +
+                '}';
+    }
 }
