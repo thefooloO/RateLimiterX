@@ -1,7 +1,6 @@
 package com.thefool.ratelimiter.factories;
 
 import com.thefool.ratelimiter.config.RatelimiterConfig;
-import com.thefool.ratelimiter.properties.PropertyConstants;
 import com.thefool.ratelimiter.rule.parser.IRuleConfigParser;
 import com.thefool.ratelimiter.rule.source.IRuleConfigSource;
 import com.thefool.ratelimiter.spi.ExtensionServiceLoader;

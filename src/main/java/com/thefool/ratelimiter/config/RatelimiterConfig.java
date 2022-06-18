@@ -48,15 +48,4 @@ public class RatelimiterConfig {
 
         this.basePackages = propertySource.getPropertyStringValue(PropertyConstants.BASE_PACKAGES);
     }
-
-    public static void main(String[] args) {
-        System.setProperty(PropertyConstants.PROPERTY_RULE_CONFIG_PARSER, "xml");
-        System.setProperty(PropertyConstants.PROPERTY_RULE_CONFIG_SOURCE, "redis");
-        System.setProperty(PropertyConstants.BASE_PACKAGES, "com.thefool.ratelimiter");
-        RatelimiterConfig ratelimiterConfig = new RatelimiterConfig();
-        ratelimiterConfig.load();
-        System.out.println(ratelimiterConfig.getRuleConfigParserType());
-        System.out.println(ratelimiterConfig.getRuleConfigSourceType());
-        System.out.println(ratelimiterConfig.getBasePackages());
-    }
 }
