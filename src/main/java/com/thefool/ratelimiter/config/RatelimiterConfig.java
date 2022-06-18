@@ -5,13 +5,11 @@ import com.thefool.ratelimiter.properties.PropertyConstants;
 import com.thefool.ratelimiter.properties.PropertySource;
 import com.thefool.ratelimiter.properties.loader.PropertySourceLoader;
 import com.thefool.ratelimiter.properties.loader.impl.JvmPropertySourceLoader;
-import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Data
 public class RatelimiterConfig {
 
     private List<PropertySourceLoader> sourceLoaders;
@@ -45,5 +43,37 @@ public class RatelimiterConfig {
             this.ruleConfigSourceType = sourceType;
         }
         this.appId = propertySource.getPropertyStringValue(PropertyConstants.APP_ID);
+    }
+
+    public List<PropertySourceLoader> getSourceLoaders() {
+        return sourceLoaders;
+    }
+
+    public void setSourceLoaders(List<PropertySourceLoader> sourceLoaders) {
+        this.sourceLoaders = sourceLoaders;
+    }
+
+    public String getRuleConfigParserType() {
+        return ruleConfigParserType;
+    }
+
+    public void setRuleConfigParserType(String ruleConfigParserType) {
+        this.ruleConfigParserType = ruleConfigParserType;
+    }
+
+    public String getRuleConfigSourceType() {
+        return ruleConfigSourceType;
+    }
+
+    public void setRuleConfigSourceType(String ruleConfigSourceType) {
+        this.ruleConfigSourceType = ruleConfigSourceType;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 }

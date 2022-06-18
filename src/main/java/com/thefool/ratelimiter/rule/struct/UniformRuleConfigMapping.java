@@ -1,10 +1,15 @@
 package com.thefool.ratelimiter.rule.struct;
 
-import lombok.Data;
-
 import java.util.List;
 
-@Data
 public class UniformRuleConfigMapping {
     List<UniformRuleConfig> configs;
+
+    public List<UniformRuleConfig> getConfigs() {
+        return configs;
+    }
+
+    public void setConfigs(List<UniformRuleConfig> configs) {
+        this.configs = configs;
+    }
 }

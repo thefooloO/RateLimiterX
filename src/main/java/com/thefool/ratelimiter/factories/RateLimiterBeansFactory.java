@@ -4,9 +4,7 @@ import com.thefool.ratelimiter.config.RatelimiterConfig;
 import com.thefool.ratelimiter.rule.parser.IRuleConfigParser;
 import com.thefool.ratelimiter.rule.source.IRuleConfigSource;
 import com.thefool.ratelimiter.spi.ExtensionServiceLoader;
-import lombok.Data;
 
-@Data
 public class RateLimiterBeansFactory {
 
     public static final RateLimiterBeansFactory context = new RateLimiterBeansFactory();
@@ -30,5 +28,13 @@ public class RateLimiterBeansFactory {
         return ruleConfigSource != null
                 ? ruleConfigSource
                 : RuleConfigSourceFactory.obtainRuleConfigSource(ratelimiterConfig.getRuleConfigSourceType());
+    }
+
+    public RatelimiterConfig getRatelimiterConfig() {
+        return ratelimiterConfig;
+    }
+
+    public void setRatelimiterConfig(RatelimiterConfig ratelimiterConfig) {
+        this.ratelimiterConfig = ratelimiterConfig;
     }
 }

@@ -5,7 +5,6 @@ import com.thefool.ratelimiter.factories.RateLimiterBeansFactory;
 import com.thefool.ratelimiter.rule.struct.UniformRuleConfigMapping;
 import lombok.Data;
 
-@Data
 public class RateLimiter {
 
     private UniformRuleConfigMapping uniformRuleConfigMapping;

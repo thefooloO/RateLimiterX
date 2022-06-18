@@ -11,7 +11,6 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <sourceDirectory>${project.build.directory}/generated-sources/delombok</sourceDirectory>
     </properties>
 
     <dependencies>
@@ -20,13 +19,6 @@
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
             <version>1.28</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.16</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -40,24 +32,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok-maven-plugin</artifactId>
-                <version>1.18.20.0</version>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>delombok</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <addOutputDirectory>false</addOutputDirectory>
-                    <sourceDirectory>src/main/java</sourceDirectory>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>aspectj-maven-plugin</artifactId>
                 <version>1.14.0</version>
@@ -68,14 +42,6 @@
                     <skip>true</skip>
                     <Xlint>ignore</Xlint>
                     <showWeaveInfo>true</showWeaveInfo>
-                    <sources>
-                        <source>
-                            <basedir>${sourceDirectory}</basedir>
-                            <includes>
-                                <include>**/*.java</include>
-                            </includes>
-                        </source>
-                    </sources>
                 </configuration>
                 <executions>
                     <execution>
