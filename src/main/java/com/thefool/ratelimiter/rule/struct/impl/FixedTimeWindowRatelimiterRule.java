@@ -6,8 +6,9 @@ import com.thefool.ratelimiter.rule.struct.IRule;
  * 固定时间窗口限流规则
  */
 public class FixedTimeWindowRatelimiterRule implements IRule {
+
     int limit;
-    int unit = 1;
+    long interval;
 
     public int getLimit() {
         return limit;
@@ -17,11 +18,11 @@ public class FixedTimeWindowRatelimiterRule implements IRule {
         this.limit = limit;
     }
 
-    public int getUnit() {
-        return unit;
+    public long getInterval() {
+        return interval;
     }
 
-    public void setUnit(int unit) {
-        this.unit = unit;
+    public void setInterval(long interval) {
+        this.interval = interval;
     }
 }

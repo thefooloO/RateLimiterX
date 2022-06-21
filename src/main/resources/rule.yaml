@@ -1,9 +1,9 @@
 configs:
-    - name: test
+    - name: test1
       ratelimiter: com.thefool.ratelimiter.algorithm.impl.FixedTimeWindowRatelimiter
       rule: com.thefool.ratelimiter.rule.struct.impl.FixedTimeWindowRatelimiterRule
-      info: '{"limit": 1, "unit": 1}'
+      info: '{"limit": 3, "interval": 1000}'
     - name: test2
       ratelimiter: com.thefool.ratelimiter.algorithm.impl.FixedTimeWindowRatelimiter
       rule: com.thefool.ratelimiter.rule.struct.impl.FixedTimeWindowRatelimiterRule
-      info: '{"limit": 2, "unit": 2}'
+      info: '{"limit": 2, "interval": 2000}'
