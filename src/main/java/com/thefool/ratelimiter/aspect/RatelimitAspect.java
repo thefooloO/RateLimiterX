@@ -1,9 +1,11 @@
 package com.thefool.ratelimiter.aspect;
 
+import com.alibaba.fastjson.JSONObject;
+import com.thefool.ratelimiter.algorithm.IRatelimiter;
 import com.thefool.ratelimiter.annotation.Ratelimit;
 import com.thefool.ratelimiter.factories.RateLimiterBeansFactory;
-import com.thefool.ratelimiter.rule.config.UniformRuleConfig;
 import com.thefool.ratelimiter.rule.config.UniformRuleConfigMapping;
+import com.thefool.ratelimiter.rule.struct.IRule;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -18,11 +20,15 @@ import java.util.Map;
 public class RatelimitAspect {
 
     private static UniformRuleConfigMapping uniformRuleConfigMapping = RateLimiterBeansFactory.context.obtainRuleConfigSource().load();
-    private static Map<String, UniformRuleConfig> configMap = new HashMap<>();
+    private static Map<String, IRule> ruleMap = new HashMap<>();
+    private static Map<String, IRatelimiter> algMap = new HashMap<>();
 
     static {
         uniformRuleConfigMapping.getConfigs().forEach(config -> {
-            configMap.put(config.getName(), config);
+            try {
+                ruleMap.put(config.getName(), (IRule) JSONObject.parseObject(config.getInfo(),Class.forName(config.getFormat())));
+                algMap.put(config.getName(), (IRatelimiter) (Class.forName(config.getAlg()).newInstance()));
+            } catch (Exception e) {}
         });
     }
 
@@ -31,8 +37,11 @@ public class RatelimitAspect {
 
     @Before("jointPoint()")
     public void before(JoinPoint joinPoint) {
-        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        Method method = methodSignature.getMethod();
-        System.out.println(configMap.get(method.getAnnotation(Ratelimit.class).value()));
+        Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
+        String ratelimitKey = method.getDeclaringClass().getName() + ":" + method.getName();
+        String ruleName = method.getAnnotation(Ratelimit.class).value();
+        IRule rule = ruleMap.get(ruleName);
+        IRatelimiter ratelimiter = algMap.get(ruleName);
+        while(!ratelimiter.tryAcquire(rule, ratelimitKey));
     }
 }
