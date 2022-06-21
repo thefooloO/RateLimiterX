@@ -4,7 +4,6 @@ import com.thefool.ratelimiter.algorithm.IRatelimiter;
 import com.thefool.ratelimiter.rule.struct.IRule;
 import com.thefool.ratelimiter.rule.struct.impl.FixedTimeWindowRatelimiterRule;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -29,7 +28,7 @@ public class FixedTimeWindowRatelimiter implements IRatelimiter {
 
         FixedTimeWindowCounter fixedTimeWindowCounter = fixedTimeWindowCounterMap.get(key);
         int updatedCount = fixedTimeWindowCounter.counter.incrementAndGet();
-        long now = new Date().getTime();
+        long now = System.currentTimeMillis();
 
         if(now < fixedTimeWindowCounter.time + fixedTimeWindowRatelimiterRule.getInterval()) {
             return fixedTimeWindowRatelimiterRule.getLimit() > updatedCount;
@@ -42,6 +41,6 @@ public class FixedTimeWindowRatelimiter implements IRatelimiter {
 
     private class FixedTimeWindowCounter {
         public AtomicInteger counter = new AtomicInteger(0);
-        public long time = new Date().getTime();
+        public long time = System.currentTimeMillis();
     }
 }
