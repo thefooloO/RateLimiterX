@@ -20,14 +20,14 @@ import java.util.Map;
 public class RatelimitAspect {
 
     private static UniformRuleConfigMapping uniformRuleConfigMapping = RateLimiterBeansFactory.context.obtainRuleConfigSource().load();
+    private static Map<String, IRatelimiter> ratelimiterMap = new HashMap<>();
     private static Map<String, IRule> ruleMap = new HashMap<>();
-    private static Map<String, IRatelimiter> algMap = new HashMap<>();
 
     static {
         uniformRuleConfigMapping.getConfigs().forEach(config -> {
             try {
-                ruleMap.put(config.getName(), (IRule) JSONObject.parseObject(config.getInfo(),Class.forName(config.getFormat())));
-                algMap.put(config.getName(), (IRatelimiter) (Class.forName(config.getAlg()).newInstance()));
+                ratelimiterMap.put(config.getName(), (IRatelimiter) (Class.forName(config.getRatelimiter()).newInstance()));
+                ruleMap.put(config.getName(), (IRule) JSONObject.parseObject(config.getInfo(), Class.forName(config.getRule())));
             } catch (Exception e) {}
         });
     }
@@ -39,9 +39,9 @@ public class RatelimitAspect {
     public void before(JoinPoint joinPoint) {
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
         String ratelimitKey = method.getDeclaringClass().getName() + ":" + method.getName();
-        String ruleName = method.getAnnotation(Ratelimit.class).value();
-        IRule rule = ruleMap.get(ruleName);
-        IRatelimiter ratelimiter = algMap.get(ruleName);
+        String name = method.getAnnotation(Ratelimit.class).value();
+        IRule rule = ruleMap.get(name);
+        IRatelimiter ratelimiter = ratelimiterMap.get(name);
         while(!ratelimiter.tryAcquire(rule, ratelimitKey));
     }
 }

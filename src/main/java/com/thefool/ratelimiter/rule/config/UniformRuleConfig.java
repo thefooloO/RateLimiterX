@@ -1,11 +1,10 @@
 package com.thefool.ratelimiter.rule.config;
 
-
 public class UniformRuleConfig {
     String name;
-    String alg;
+    String ratelimiter;
+    String rule;
     String info;
-    String format;
 
     public String getName() {
         return name;
@@ -15,12 +14,20 @@ public class UniformRuleConfig {
         this.name = name;
     }
 
-    public String getAlg() {
-        return alg;
+    public String getRatelimiter() {
+        return ratelimiter;
     }
 
-    public void setAlg(String alg) {
-        this.alg = alg;
+    public void setRatelimiter(String ratelimiter) {
+        this.ratelimiter = ratelimiter;
+    }
+
+    public String getRule() {
+        return rule;
+    }
+
+    public void setRule(String rule) {
+        this.rule = rule;
     }
 
     public String getInfo() {
@@ -31,21 +38,13 @@ public class UniformRuleConfig {
         this.info = info;
     }
 
-    public String getFormat() {
-        return format;
-    }
-
-    public void setFormat(String format) {
-        this.format = format;
-    }
-
     @Override
     public String toString() {
         return "UniformRuleConfig{" +
                 "name='" + name + '\'' +
-                ", alg='" + alg + '\'' +
+                ", ratelimiter='" + ratelimiter + '\'' +
+                ", rule='" + rule + '\'' +
                 ", info='" + info + '\'' +
-                ", format='" + format + '\'' +
                 '}';
     }
 }
