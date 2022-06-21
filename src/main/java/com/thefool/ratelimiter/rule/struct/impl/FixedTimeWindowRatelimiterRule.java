@@ -1,9 +1,11 @@
-package com.thefool.ratelimiter.rule.struct;
+package com.thefool.ratelimiter.rule.struct.impl;
+
+import com.thefool.ratelimiter.rule.struct.IRule;
 
 /**
  * 固定时间窗口限流规则
  */
-public class FixedTimeWindowRatelimiterRule {
+public class FixedTimeWindowRatelimiterRule implements IRule {
     int limit;
     int unit = 1;
 

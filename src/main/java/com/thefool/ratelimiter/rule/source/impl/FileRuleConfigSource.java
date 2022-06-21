@@ -2,7 +2,7 @@ package com.thefool.ratelimiter.rule.source.impl;
 
 import com.thefool.ratelimiter.factories.RuleConfigParserFactory;
 import com.thefool.ratelimiter.rule.source.IRuleConfigSource;
-import com.thefool.ratelimiter.rule.struct.UniformRuleConfigMapping;
+import com.thefool.ratelimiter.rule.config.UniformRuleConfigMapping;
 
 import java.io.InputStream;
 

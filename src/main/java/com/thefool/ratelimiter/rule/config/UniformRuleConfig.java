@@ -1,4 +1,4 @@
-package com.thefool.ratelimiter.rule.struct;
+package com.thefool.ratelimiter.rule.config;
 
 
 public class UniformRuleConfig {

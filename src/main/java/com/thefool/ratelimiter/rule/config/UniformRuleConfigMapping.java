@@ -1,4 +1,4 @@
-package com.thefool.ratelimiter.rule.struct;
+package com.thefool.ratelimiter.rule.config;
 
 import java.util.List;
 

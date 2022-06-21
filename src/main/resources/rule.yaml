@@ -2,8 +2,8 @@ configs:
     - name: test
       alg: com.thefool.ratelimiter.algorithm.impl.FixedTimeWindowRatelimiter
       info: '{"limit": 1, "unit": 1}'
-      format: com.thefool.ratelimiter.rule.struct.FixedTimeWindowRatelimiterRule
+      format: com.thefool.ratelimiter.rule.struct.impl.FixedTimeWindowRatelimiterRule
     - name: test2
       alg: com.thefool.ratelimiter.algorithm.impl.FixedTimeWindowRatelimiter
       info: '{"limit": 2, "unit": 2}'
-      format: com.thefool.ratelimiter.rule.struct.FixedTimeWindowRatelimiterRule
+      format: com.thefool.ratelimiter.rule.struct.impl.FixedTimeWindowRatelimiterRule

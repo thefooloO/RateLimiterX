@@ -2,8 +2,8 @@ package com.thefool.ratelimiter.aspect;
 
 import com.thefool.ratelimiter.annotation.Ratelimit;
 import com.thefool.ratelimiter.factories.RateLimiterBeansFactory;
-import com.thefool.ratelimiter.rule.struct.UniformRuleConfig;
-import com.thefool.ratelimiter.rule.struct.UniformRuleConfigMapping;
+import com.thefool.ratelimiter.rule.config.UniformRuleConfig;
+import com.thefool.ratelimiter.rule.config.UniformRuleConfigMapping;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
