@@ -6,7 +6,6 @@ import com.thefool.ratelimiter.rule.struct.impl.TokenBucketRatelimiterRule;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 单机版-令牌桶
@@ -42,31 +41,35 @@ public class TokenBucketRatelimiter implements IBucketRatelimiter {
 
     private boolean tryAcquire(String key, int permits) {
         TokenBucket tokenBucket = tokenBucketMap.get(key);
-        if(!addTokens(tokenBucket)) {
+        synchronized (tokenBucket) {
+            addTokens(tokenBucket);
+            tokenBucket.lastRequestTime = System.currentTimeMillis();
+            if(tokenBucket.currentPermits >= permits) {
+                tokenBucket.currentPermits -= permits;
+                return true;
+            }
             return false;
         }
-        int currentPermits = tokenBucket.currentPermits.get();
-        tokenBucket.lastRequestTime = System.currentTimeMillis();
-        return currentPermits >= permits ? tokenBucket.currentPermits.compareAndSet(currentPermits, currentPermits - permits) : false;
     }
 
-    private boolean addTokens(TokenBucket tokenBucket) {
-        int newTokens = (int) ((System.currentTimeMillis() - tokenBucket.lastRequestTime) / 1000) * tokenBucket.tokenBucketRule.getRate();
-        int currentTokens = tokenBucket.currentPermits.get();
-        return tokenBucket.currentPermits.compareAndSet(currentTokens, Math.min(tokenBucket.tokenBucketRule.getMaxPermits(), currentTokens + newTokens));
+    private void addTokens(TokenBucket tokenBucket) {
+        int newTokens = (int) (((System.currentTimeMillis() - tokenBucket.lastRequestTime) / 1000.0) * tokenBucket.tokenBucketRule.getRate());
+        tokenBucket.currentPermits = Math.min(tokenBucket.tokenBucketRule.getMaxPermits(), tokenBucket.currentPermits + newTokens);
     }
 
     private class TokenBucket {
         TokenBucketRatelimiterRule tokenBucketRule;
-        AtomicInteger currentPermits = new AtomicInteger(0);
+        int  currentPermits;
         long lastRequestTime = System.currentTimeMillis();
 
         public TokenBucket(int rate, int maxPermits) {
-            tokenBucketRule = new TokenBucketRatelimiterRule(rate, maxPermits);
+            this.tokenBucketRule = new TokenBucketRatelimiterRule(rate, maxPermits);
+            this.currentPermits  = maxPermits;
         }
 
         public TokenBucket(TokenBucketRatelimiterRule tokenBucketRule) {
             this.tokenBucketRule = tokenBucketRule;
+            this.currentPermits  = tokenBucketRule.getMaxPermits();
         }
     }
 }
