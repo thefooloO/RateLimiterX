@@ -43,7 +43,6 @@ public class TokenBucketRatelimiter implements IBucketRatelimiter {
         TokenBucket tokenBucket = tokenBucketMap.get(key);
         synchronized (tokenBucket) {
             addTokens(tokenBucket);
-            tokenBucket.lastRequestTime = System.currentTimeMillis();
             if(tokenBucket.currentPermits >= permits) {
                 tokenBucket.currentPermits -= permits;
                 return true;
@@ -55,6 +54,7 @@ public class TokenBucketRatelimiter implements IBucketRatelimiter {
     private void addTokens(TokenBucket tokenBucket) {
         int newTokens = (int) (((System.currentTimeMillis() - tokenBucket.lastRequestTime) / 1000.0) * tokenBucket.tokenBucketRule.getRate());
         tokenBucket.currentPermits = Math.min(tokenBucket.tokenBucketRule.getMaxPermits(), tokenBucket.currentPermits + newTokens);
+        tokenBucket.lastRequestTime = System.currentTimeMillis();
     }
 
     private class TokenBucket {
