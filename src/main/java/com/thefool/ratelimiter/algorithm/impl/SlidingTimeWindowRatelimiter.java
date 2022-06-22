@@ -8,7 +8,7 @@ import com.thefool.ratelimiter.rule.struct.IRule;
  */
 public class SlidingTimeWindowRatelimiter implements IRatelimiter {
     @Override
-    public boolean tryAcquire(IRule rule, String key) {
+    public boolean tryAcquire(String key, IRule rule) {
         return false;
     }
 }

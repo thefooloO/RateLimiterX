@@ -42,7 +42,7 @@ public class RatelimitAspect {
         String name = method.getAnnotation(Ratelimit.class).value();
         IRule rule = ruleMap.get(name);
         IRatelimiter ratelimiter = ratelimiterMap.get(name);
-        while(!ratelimiter.tryAcquire(rule, ratelimitKey)) {
+        while(!ratelimiter.tryAcquire(ratelimitKey, rule)) {
             System.out.println(Thread.currentThread().getName() + "：限流...");
         }
     }

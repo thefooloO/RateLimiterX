@@ -16,7 +16,7 @@ public class FixedTimeWindowRatelimiter implements IRatelimiter {
     static Map<String, FixedTimeWindowCounter> fixedTimeWindowCounterMap = new HashMap<>();
 
     @Override
-    public boolean tryAcquire(IRule rule, String key) {
+    public boolean tryAcquire(String key, IRule rule) {
         FixedTimeWindowRatelimiterRule fixedTimeWindowRatelimiterRule = (FixedTimeWindowRatelimiterRule) rule;
         if(!fixedTimeWindowCounterMap.containsKey(key)) {
             synchronized (FixedTimeWindowRatelimiter.class) {
