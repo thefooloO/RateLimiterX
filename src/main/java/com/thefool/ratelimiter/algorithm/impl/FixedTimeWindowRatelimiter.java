@@ -13,33 +13,33 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class FixedTimeWindowRatelimiter implements IRatelimiter {
 
-    static Map<String, FixedTimeWindowCounter> fixedTimeWindowCounterMap = new HashMap<>();
+    static Map<String, FixedTimeWindow> fixedTimeWindowMap = new HashMap<>();
 
     @Override
     public boolean tryAcquire(String key, IRule rule) {
         FixedTimeWindowRatelimiterRule fixedTimeWindowRatelimiterRule = (FixedTimeWindowRatelimiterRule) rule;
-        if(!fixedTimeWindowCounterMap.containsKey(key)) {
+        if(!fixedTimeWindowMap.containsKey(key)) {
             synchronized (FixedTimeWindowRatelimiter.class) {
-                if(!fixedTimeWindowCounterMap.containsKey(key)) {
-                    fixedTimeWindowCounterMap.put(key, new FixedTimeWindowCounter());
+                if(!fixedTimeWindowMap.containsKey(key)) {
+                    fixedTimeWindowMap.put(key, new FixedTimeWindow());
                 }
             }
         }
 
-        FixedTimeWindowCounter fixedTimeWindowCounter = fixedTimeWindowCounterMap.get(key);
-        int updatedCount = fixedTimeWindowCounter.counter.incrementAndGet();
+        FixedTimeWindow fixedTimeWindow = fixedTimeWindowMap.get(key);
+        int updatedCount = fixedTimeWindow.counter.incrementAndGet();
         long now = System.currentTimeMillis();
 
-        if(now < fixedTimeWindowCounter.time + fixedTimeWindowRatelimiterRule.getInterval()) {
+        if(now < fixedTimeWindow.time + fixedTimeWindowRatelimiterRule.getInterval()) {
             return fixedTimeWindowRatelimiterRule.getLimit() > updatedCount;
         }
         else {
-            fixedTimeWindowCounter.time = now;
-            return fixedTimeWindowCounter.counter.compareAndSet(updatedCount, 1);
+            fixedTimeWindow.time = now;
+            return fixedTimeWindow.counter.compareAndSet(updatedCount, 1);
         }
     }
 
-    private class FixedTimeWindowCounter {
+    private class FixedTimeWindow {
         public AtomicInteger counter = new AtomicInteger(0);
         public long time = System.currentTimeMillis();
     }
