@@ -54,7 +54,16 @@ public class SlidingTimeWindowRatelimiter implements IRatelimiter {
         }
 
         public void slideWindow() {
-
+            long now = System.currentTimeMillis();
+            long num = (now - startTime) / (rule.getWindowSize() / rule.getSplitNum());
+            if(num == 0) return;
+            long slideNum = Math.min(num, rule.getSplitNum());
+            for(int i = 0; i < slideNum; i++) {
+                index = (index + 1) % rule.getSplitNum();
+                count -= counters[index];
+                counters[index] = 0;
+            }
+            startTime = startTime + num * (rule.getWindowSize() / rule.getSplitNum());
         }
     }
 }
