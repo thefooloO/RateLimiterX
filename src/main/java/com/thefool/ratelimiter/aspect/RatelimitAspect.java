@@ -38,11 +38,11 @@ public class RatelimitAspect {
     @Before("jointPoint()")
     public void before(JoinPoint joinPoint) throws InterruptedException {
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
-        String ratelimitKey = method.getDeclaringClass().getName() + ":" + method.getName();
+        String key = method.getDeclaringClass().getName() + ":" + method.getName();
         String name = method.getAnnotation(Ratelimit.class).value();
         IRule rule = ruleMap.get(name);
         IRatelimiter ratelimiter = ratelimiterMap.get(name);
-        while(!ratelimiter.tryAcquire(ratelimitKey, rule)) {
+        while(!ratelimiter.tryAcquire(key, rule)) {
             System.out.println(Thread.currentThread().getName() + "：限流...");
             Thread.sleep(200);
         }
