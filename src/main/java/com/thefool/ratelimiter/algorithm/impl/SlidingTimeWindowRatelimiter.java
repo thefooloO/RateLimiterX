@@ -28,16 +28,16 @@ public class SlidingTimeWindowRatelimiter implements IRatelimiter {
 
         SlidingTimeWindow slidingTimeWindow = slidingTimeWindowMap.get(key);
         synchronized (slidingTimeWindow) {
-            slideWindow(slidingTimeWindow);
-
+            slidingTimeWindow.slideWindow();
+            if(slidingTimeWindow.count >= slidingTimeWindow.rule.getLimit()) {
+                return false;
+            }
+            else {
+                slidingTimeWindow.count++;
+                slidingTimeWindow.counters[slidingTimeWindow.index]++;
+                return true;
+            }
         }
-
-        return false;
-    }
-
-
-    private void slideWindow(SlidingTimeWindow slidingTimeWindow) {
-
     }
 
     private class SlidingTimeWindow {
@@ -46,11 +46,15 @@ public class SlidingTimeWindowRatelimiter implements IRatelimiter {
         int   index = 0;
         int   count = 0;
         int[] counters;
-        SlidingTimeWindowRatelimiterRule slidingTimeWindowRatelimiterRule;
+        SlidingTimeWindowRatelimiterRule rule;
 
-        public SlidingTimeWindow(SlidingTimeWindowRatelimiterRule slidingTimeWindowRatelimiterRule) {
-            counters = new int[slidingTimeWindowRatelimiterRule.getSplitNum()];
-            this.slidingTimeWindowRatelimiterRule = slidingTimeWindowRatelimiterRule;
+        public SlidingTimeWindow(SlidingTimeWindowRatelimiterRule rule) {
+            counters = new int[rule.getSplitNum()];
+            this.rule = rule;
+        }
+
+        public void slideWindow() {
+
         }
     }
 }
