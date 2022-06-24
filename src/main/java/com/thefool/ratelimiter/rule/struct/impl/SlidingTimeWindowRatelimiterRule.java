@@ -6,7 +6,7 @@ public class SlidingTimeWindowRatelimiterRule implements IRule {
 
     int windowSize;     // ms
     int limit;
-    int num;
+    int splitNum;
 
     public int getWindowSize() {
         return windowSize;
@@ -24,11 +24,11 @@ public class SlidingTimeWindowRatelimiterRule implements IRule {
         this.limit = limit;
     }
 
-    public int getNum() {
-        return num;
+    public int getSplitNum() {
+        return splitNum;
     }
 
-    public void setNum(int num) {
-        this.num = num;
+    public void setSplitNum(int splitNum) {
+        this.splitNum = splitNum;
     }
 }
